@@ -78,10 +78,11 @@ module selective_infill(add_size) mirror([0,1,0]) translate([-50, -33, 0.6]) {
                 translate([50,50 + add_size,-1]) rotate([0,0,90]) cylinder( h=10, r=8.8, $fn=30);
             } 
         }
+        
         // prevent nut traps and main body from being sliced up for reinforcements
-        translate([57.5,50.5 + add_size,-1]) rotate([0,0,45]) cube([8,10,9]);                 // front         
-        translate([52 - add_size/2,30.5 + add_size/2,-1]) rotate([0,0,45]) cube([10,20,20]);  // front angled   
-        translate([32,37.5,-1]) cube([8,30,9]);                                               // inner horizontal 
+        translate([57.5,50.5 + add_size,-1]) rotate([0,0,45]) cube([8,10,9]);                         // front         
+        translate([51 - (add_size/10), 31.5 + add_size * 0.75,-1]) rotate([0,0,45]) cube([10,20,20]); // front angled   
+        translate([32,37.5,-1]) cube([8,30,9]);                                                       // inner horizontal 
     }
 } 
     
