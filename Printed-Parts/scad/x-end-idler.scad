@@ -56,9 +56,7 @@ module x_end_idler_base(vrod_distance, lead_screw) {
     }
 }
 
-module selective_infill(vrod_distance) mirror([0,1,0]) translate([-50, -33, 0.6]) { 
-    // additional size due to larger vrod_distance
-    add_size = vrod_distance - base_vrod_distance;
+module selective_infill(add_size) mirror([0,1,0]) translate([-50, -33, 0.6]) { 
     
     difference() {
         // selective infill for TR nut ring
@@ -88,15 +86,16 @@ module selective_infill(vrod_distance) mirror([0,1,0]) translate([-50, -33, 0.6]
 } 
     
    
-module reinforcement_selective_infill(vrod_distance) {
-    // additional size due to larger vrod_distance
-    add_size = vrod_distance - base_vrod_distance;
+module reinforcement_selective_infill(add_size) {
     
     rotate([90,0,-15,]) translate ([-1.5 + (add_size/15), 8, 26 + add_size])linear_extrude(height = 0.2) polygon( points=[[-2,0],[0,12],[8,0]] ); // bearings
     rotate([90,0,-50,]) translate ([8.5, 8, 1.4 + (add_size * 0.65)])linear_extrude(height = 0.2) polygon( points=[[0,0],[0,12],[8 + add_size/2,0]] ); //body    
 }
     
 module x_end_idler(vrod_distance = 17, lead_screw = true) {
+    // additional size due to larger vrod_distance
+    add_size = vrod_distance - base_vrod_distance;
+    
     mirror([0,1,0]) 
     difference() {
         x_end_idler_base(vrod_distance, lead_screw);
@@ -104,8 +103,8 @@ module x_end_idler(vrod_distance = 17, lead_screw = true) {
         
         // Selective infill is only needed when we have a lead screw
         if (lead_screw) {
-            selective_infill(vrod_distance);
-            reinforcement_selective_infill(vrod_distance);
+            selective_infill(add_size);
+            reinforcement_selective_infill(add_size);
         }
     }
 }
