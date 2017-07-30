@@ -91,21 +91,21 @@ module x_end_holes(vrod_distance, lead_screw = true) {
         // Stress relief
         translate(v=[-5.5-10+1.5,-10-1,30]) cube(size = [18,1,28], center = true);
         difference() {
-            translate(v=[-5.5-10+1.5,-10,30]) cube(size = [10,46 + add_size,28], center = true);
+            translate(v=[-5.5-10+1.5,-10 - add_size,30]) cube(size = [10,46 + 2 * add_size,28], center = true);
 
             // Nice edges
-            translate(v=[-5.5-10+1.5-5,-10,30+23]) rotate([0,20,0]) cube(size = [10,46 + add_size,28], center = true);
-            translate(v=[-5.5-10+1.5+5,-10,30+23]) rotate([0,-20,0]) cube(size = [10,46 + add_size,28], center = true);
-            translate(v=[-5.5-10+1.5,-10,30-23]) rotate([0,45,0]) cube(size = [10,46 + add_size,28], center = true);
-            translate(v=[-5.5-10+1.5,-10,30-23]) rotate([0,-45,0]) cube(size = [10,46 + add_size,28], center = true);
+            translate(v=[-5.5-10+1.5-5,-10 - add_size,30+23]) rotate([0,20,0]) cube(size = [10,46 + 2 * add_size,28], center = true);
+            translate(v=[-5.5-10+1.5+5,-10 - add_size,30+23]) rotate([0,-20,0]) cube(size = [10,46 + 2 * add_size,28], center = true);
+            translate(v=[-5.5-10+1.5,-10 - add_size,30-23]) rotate([0,45,0]) cube(size = [10,46 + 2 * add_size,28], center = true);
+            translate(v=[-5.5-10+1.5,-10 - add_size,30-23]) rotate([0,-45,0]) cube(size = [10,46 + 2 * add_size,28], center = true);
 
         }
     }
 
     // Bottom pushfit rod
-    translate(v=[-15,-41,6]) rotate(a=[-90,0,0]) pushfit_rod(7.8,50);
+    translate(v=[-15,-41 - add_size,6]) rotate(a=[-90,0,0]) pushfit_rod(7.8,50 + add_size);
     // Top pushfit rod
-    translate(v=[-15,-41.5,hrod_distance+6]) rotate(a=[-90,0,0]) pushfit_rod(7.8,50);
+    translate(v=[-15,-41.5 - add_size,hrod_distance+6]) rotate(a=[-90,0,0]) pushfit_rod(7.8,50 + add_size);
 
     if (lead_screw) {
         // == TR Nut trap ==
@@ -128,14 +128,14 @@ module x_end_holes(vrod_distance, lead_screw = true) {
 
 
 // Final prototype
-module x_end_plain(vrod_distance = 30, lead_screw = true) {
+module x_end_plain(vrod_distance = 17, lead_screw = true) {
     difference(){
         x_end_base(vrod_distance, lead_screw);
         x_end_holes(vrod_distance, lead_screw);
     }
 }
 
-x_end_plain(vrod_distance = 22, lead_screw = true);
+x_end_plain();
 
 
 module pushfit_rod(diameter,length) {
