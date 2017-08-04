@@ -16,32 +16,28 @@ module m3nut() {
 
 module ext_body() {
     difference() {
-        extruder_body();
+        union() {
+            extruder_body();
+            pinda_mount();
+        }
         extruder_mount_holes();
 
         // PINDA entry hole
         translate([-5.5,37,6])rotate([90,0,0])cylinder(r=4.4, h=4, $fn=20);
+        
+        // screw end larger hole
+        translate([-20,40,12])rotate([0,90,0])cylinder(r=1.5, h=24, $fn=20);
+        translate([2,40,11.5])rotate([0,90,0])cylinder(r=1.5, h=3, $fn=20);
+        translate([2,40,12])rotate([0,90,0])cylinder(r=1.5, h=3, $fn=20);
+        translate([2,40,12.5])rotate([0,90,0])cylinder(r=1.5, h=3, $fn=20);
+
+        // M3 nuts
+        translate([0,46,9]) m3nut();
+        translate([0,37,9]) m3nut();        
     }
 }
 
-difference() {
-    ext_body();
-
-    // remove old pinda
-    translate([-20,26,-2]) cube([20,30,30]);
-
-    // screw end larger hole
-    translate([-20,40,12])rotate([0,90,0])cylinder(r=1.5, h=24, $fn=20);
-    translate([2,40,11.5])rotate([0,90,0])cylinder(r=1.5, h=3, $fn=20);
-    translate([2,40,12])rotate([0,90,0])cylinder(r=1.5, h=3, $fn=20);
-    translate([2,40,12.5])rotate([0,90,0])cylinder(r=1.5, h=3, $fn=20);
-
-    // M3 nuts
-    translate([0,46,9]) m3nut();
-    translate([0,37,9]) m3nut();
-}
-
-module ex_body() {
+module pinda_mount() {
     difference() {
         union() {
             // body
@@ -108,4 +104,4 @@ module ex_body() {
     }
 }
 
-ex_body();
+ext_body();
