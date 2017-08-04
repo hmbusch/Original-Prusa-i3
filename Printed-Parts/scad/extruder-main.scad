@@ -281,51 +281,14 @@ module extruder_mount_holes() {
 
     // Motor mount holes
     translate([21,-21,0]) {
-
         // Top right
-        translate([-15.5,-15.5,0]) {
-            translate([0,0,4]) cylinder(r=1.75, h=50, $fn=30);  // Screw hole
-            intersection() {
-                translate([0,0,2]) cube([3.3, 6.2,4], center=true);  // Screw hole
-                translate([0,0,-1]) cylinder(r=3.1, h=8, $fn=30); // Head cut
-            }
-
-            translate([0,0,2]) cube([3.5, 3.5,5], center=true);  // Screw hole
-            translate([0,0,-1]) cylinder(r=3.1, h=4.5, $fn=30); // Head cut
-        }
-
+        translate([-15.5,-15.5,0]) motor_mount_hole();
         // Bottom right
-        translate([-15.5,15.5,0]) {
-            translate([0,0,4]) cylinder(r=1.75, h=50, $fn=30);  // Screw hole
-            intersection() {
-                translate([0,0,2]) cube([3.3, 6.2,4], center=true);  // Screw hole
-                translate([0,0,-1]) cylinder(r=3.1, h=8, $fn=30); // Head cut
-            }
-            translate([0,0,2]) cube([3.5, 3.5,5], center=true);  // Screw hole
-            translate([0,0,-1]) cylinder(r=3.1, h=4.5, $fn=30); // Head cut
-        }
-
+        translate([-15.5,15.5,0]) motor_mount_hole();
         // Top left
-        translate([15.5,-15.5,0]) {
-            translate([0,0,4]) cylinder(r=1.75, h=50, $fn=30);  // Screw hole
-            intersection() {
-                translate([0,0,2]) cube([3.3, 6.2,4], center=true);  // Screw hole
-                translate([0,0,-1]) cylinder(r=3.1, h=8, $fn=30); // Head cut
-            }
-            translate([0,0,2]) cube([3.5, 3.5,5], center=true);  // Screw hole
-            translate([0,0,-1]) cylinder(r=3.1, h=4.5, $fn=30); // Head cut
-        }
-
+        translate([15.5,-15.5,0]) motor_mount_hole();
         // Bottom left
-        translate([15.5,15.5,0]) {
-            translate([0,0,4]) cylinder(r=1.75, h=50, $fn=30);  // Screw hole
-            intersection(){
-                translate([0,0,2]) cube([3.3, 6.2,4], center=true);  // Screw hole
-                translate([0,0,-1]) cylinder(r=3.1, h=8, $fn=30); // Head cut
-            }
-            translate([0,0,2]) cube([3.5, 3.5,5], center=true);  // Screw hole
-            translate([0,0,-1]) cylinder(r=3.1, h=4.5, $fn=30); // Head cut
-        }
+        translate([15.5,15.5,0]) motor_mount_hole();
     }
 
     //selective infill spikes  EXT COVER
@@ -338,6 +301,16 @@ module extruder_mount_holes() {
     mirror([0,0,1]) rotate([90,0,90]) translate ([40,-7,34])linear_extrude(height = 0.2) polygon( points=[[3,-7],[1.5,-2],[-1,2],[1,2],[3,6]] );
     mirror([0,0,1]) rotate([90,0,90]) translate ([40,-7,32])linear_extrude(height = 0.2) polygon( points=[[3,-7],[1.5,-2],[-1,2],[1,2],[3,6]] );
     mirror([0,0,1]) rotate([90,0,90]) translate ([40,-7,30])linear_extrude(height = 0.2) polygon( points=[[3,-7],[1.5,-2],[-1,2],[1,2],[3,6]] );
+}
+
+module motor_mount_hole() {
+    translate([0,0,4]) cylinder(r=1.75, h=50, $fn=30);  // Screw hole
+    intersection(){
+        translate([0,0,2]) cube([3.3, 6.2,4], center=true);  // Screw hole
+        translate([0,0,-1]) cylinder(r=3.1, h=8, $fn=30); // Head cut
+    }
+    translate([0,0,2]) cube([3.5, 3.5,5], center=true);  // Screw hole
+    translate([0,0,-1]) cylinder(r=3.1, h=4.5, $fn=30); // Head cut    
 }
 
 module extruder_nozzle_cut() {
