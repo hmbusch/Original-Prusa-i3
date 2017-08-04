@@ -67,6 +67,29 @@ module reinforcement_selective_infill() {
     rotate([90,0,-50,]) translate ([8.5, 8, 1.4])linear_extrude(height = 0.2) polygon( points=[[0,0],[0,12],[12,0]] ); //vzpera tela    
 }
 
+module x_end_belt_hole(add_size) {
+    // Belt hole
+    translate(v=[-1,0,0]) {
+        difference() {
+            translate(v=[-5.5-10+1.5,-10 - add_size,30]) cube(size = [10,46 + 2 * add_size,28], center = true);
+
+            // Nice edges
+            translate(v=[-5.5-10+1.5-5,-10 - add_size,30+23]) rotate([0,20,0]) cube(size = [10,46 + 2 * add_size,28], center = true);
+            translate(v=[-5.5-10+1.5+5,-10 - add_size,30+23]) rotate([0,-20,0]) cube(size = [10,46 + 2 * add_size,28], center = true);
+            translate(v=[-5.5-10+1.5,-10 - add_size,30-23]) rotate([0,45,0]) cube(size = [10,46 + 2 * add_size,28], center = true);
+            translate(v=[-5.5-10+1.5,-10 - add_size,30-23]) rotate([0,-45,0]) cube(size = [10,46 + 2 * add_size,28], center = true);
+
+        }
+    }
+}
+
+module x_end_pushrod_holes(add_size) {
+    // Bottom pushfit rod
+    translate(v=[-15,-41 - add_size,6]) rotate(a=[-90,0,0]) pushfit_rod(7.8,50 + add_size);
+    // Top pushfit rod
+    translate(v=[-15,-41.5 - add_size,hrod_distance+6]) rotate(a=[-90,0,0]) pushfit_rod(7.8,50 + add_size);
+}
+
 /**
  * Cuts all the neccessary holes into the base X-axis end body.
  * 
@@ -86,26 +109,15 @@ module x_end_holes(vrod_distance, lead_screw = true) {
     add_size = vrod_distance - base_vrod_distance;
     
     vertical_bearing_holes();
-    // Belt hole
+    
     translate(v=[-1,0,0]) {
         // Stress relief
         translate(v=[-5.5-10+1.5,-10-1,30]) cube(size = [18,1,28], center = true);
-        difference() {
-            translate(v=[-5.5-10+1.5,-10 - add_size,30]) cube(size = [10,46 + 2 * add_size,28], center = true);
-
-            // Nice edges
-            translate(v=[-5.5-10+1.5-5,-10 - add_size,30+23]) rotate([0,20,0]) cube(size = [10,46 + 2 * add_size,28], center = true);
-            translate(v=[-5.5-10+1.5+5,-10 - add_size,30+23]) rotate([0,-20,0]) cube(size = [10,46 + 2 * add_size,28], center = true);
-            translate(v=[-5.5-10+1.5,-10 - add_size,30-23]) rotate([0,45,0]) cube(size = [10,46 + 2 * add_size,28], center = true);
-            translate(v=[-5.5-10+1.5,-10 - add_size,30-23]) rotate([0,-45,0]) cube(size = [10,46 + 2 * add_size,28], center = true);
-
-        }
     }
 
-    // Bottom pushfit rod
-    translate(v=[-15,-41 - add_size,6]) rotate(a=[-90,0,0]) pushfit_rod(7.8,50 + add_size);
-    // Top pushfit rod
-    translate(v=[-15,-41.5 - add_size,hrod_distance+6]) rotate(a=[-90,0,0]) pushfit_rod(7.8,50 + add_size);
+    x_end_belt_hole(add_size);
+
+    x_end_pushrod_holes(add_size);
 
     if (lead_screw) {
         // == TR Nut trap ==
